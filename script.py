@@ -12,3 +12,6 @@ def multiplication(x:float, y:float):
 def division(x:float, y:float):
     if y == 0 : return "NULL : division par zero"
     return x/y
+
+def square(x:float):
+    return  x*x
