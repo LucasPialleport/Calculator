@@ -74,6 +74,12 @@ def C():
     displayEntry.delete(0, 'end')
     displayEntry.insert(0, "0")
 
+def sign_change():
+    if int(display.get()) > 0:
+        displayEntry.insert(0, "-")
+    elif int(display.get()) < 0:
+        displayEntry.delete(0, 1)
+
 def rien():
     pass
 
@@ -93,8 +99,7 @@ window.configure(bg=ColorBackground)
 
 #display bar
 display = tk.StringVar(window)
-cmd = window.register(lambda s: not s or s.isdigit()) #permet de limiter les entrée de DisplayEntry à des chiffres
-displayEntry = tk.Entry(window, textvariable=display, bg=ColorBackground, fg=ColorFont, bd=0, font=('Bahnschrift SemiBold', 20), validate="key", vcmd=(cmd, "%P"), justify = tk.RIGHT)
+displayEntry = tk.Entry(window, textvariable=display, bg=ColorBackground, fg=ColorFont, bd=0, font=('Bahnschrift SemiBold', 20), state='normal', justify = tk.RIGHT)
 displayEntry.place(x=10, y=10, width=330, height=100)
 displayEntry.insert(0, "0")
 
@@ -152,7 +157,7 @@ dot_button.place(x=180, y=360, width=75, height=50)
 C_button = tk.Button(window, text="C", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=C)
 C_button.place(x=10, y=120, width=75, height=50)
 
-sign_button = tk.Button(window, text="+/-", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=rien)
+sign_button = tk.Button(window, text="+/-", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=sign_change)
 sign_button.place(x=95, y=120, width=75, height=50)
 
 square_button = tk.Button(window, text="x²", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=rien)
