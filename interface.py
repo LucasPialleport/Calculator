@@ -16,66 +16,65 @@ def center_window(width, height):
     y = (screen_height/2) - (height/2)
     window.geometry('%dx%d+%d+%d' % (width, height, x, y))
 
-def insert1():
+def insert1(event=None):
     if float(display.get()) == 0 and not "." in display.get():
-        print("test")
         displayEntry.delete(0, 'end')
         displayEntry.insert(0, "1")
     else :
         displayEntry.insert('end', "1")
-def insert2():
+def insert2(event=None):
     if float(display.get()) == 0 and not "." in display.get():
         displayEntry.delete(0, 'end')
         displayEntry.insert(0, "2")
     else :
         displayEntry.insert('end', "2")
-def insert3():
+def insert3(event=None):
     if float(display.get()) == 0 and not "." in display.get():
         displayEntry.delete(0, 'end')
         displayEntry.insert(0, "3")
     else :
         displayEntry.insert('end', "3")
-def insert4():
+def insert4(event=None):
     if float(display.get()) == 0 and not "." in display.get():
         displayEntry.delete(0, 'end')
         displayEntry.insert(0, "4")
     else :
         displayEntry.insert('end', "4")
-def insert5():
+def insert5(event=None):
     if float(display.get()) == 0 and not "." in display.get():
         displayEntry.delete(0, 'end')
         displayEntry.insert(0, "5")
     else :
         displayEntry.insert('end', "5")
-def insert6():
+def insert6(event=None):
     if float(display.get()) == 0 and not "." in display.get():
         displayEntry.delete(0, 'end')
         displayEntry.insert(0, "6")
     else :
         displayEntry.insert('end', "6")
-def insert7():
+def insert7(event=None):
     if float(display.get()) == 0 and not "." in display.get():
         displayEntry.delete(0, 'end')
         displayEntry.insert(0, "7")
     else :
         displayEntry.insert('end', "7")
-def insert8():
+def insert8(event=None):
     if float(display.get()) == 0 and not "." in display.get():
         displayEntry.delete(0, 'end')
         displayEntry.insert(0, "8")
     else :
         displayEntry.insert('end', "8")
-def insert9():
+def insert9(event=None):
     if float(display.get()) == 0 and not "." in display.get():
         displayEntry.delete(0, 'end')
         displayEntry.insert(0, "9")
     else :
         displayEntry.insert('end', "9")
-def insert0():
+def insert0(event=None):
     if float(display.get()) != 0:
         displayEntry.insert('end', "0")
 
-def C():
+def C(event=None):
     global operation, old_value, history_count
     displayEntry.delete(0, 'end')
     displayEntry.insert(0, "0")
@@ -83,7 +82,7 @@ def C():
     old_value = 0
     operation = "None"
 
-def set_0():
+def set_0(event=None):
     displayEntry.delete(0, 'end')
     displayEntry.insert(0, "0")
 
@@ -93,28 +92,28 @@ def sign_change():
     elif float(display.get()) < 0:
         displayEntry.delete(0, 1)
 
-def add():
+def add(event=None):
     global operation, old_value, history_count
     history_count += 1
     operation = "+"
     old_value = float(display.get())
     set_0()
 
-def subtract():
+def subtract(event=None):
     global operation, old_value, history_count
     history_count += 1
     operation = "-"
     old_value = float(display.get())
     set_0()
 
-def multiply():
+def multiply(event=None):
     global operation, old_value, history_count
     history_count += 1
     operation = "*"
     old_value = float(display.get())
     set_0()
 
-def divide():
+def divide(event=None):
     global operation, old_value, history_count
     history_count += 1
     operation = "/"
@@ -127,7 +126,7 @@ def square():
     old_value = float(display.get())
     equal()
 
-def equal():
+def equal(event=None):
     if history_count == 1 : return
     if display.get() == "NULL : divided by zero" : C()
     elif operation == "+":
@@ -152,7 +151,7 @@ def equal():
         displayEntry.insert(0, val_string)
     else : C()
 
-def dot():
+def dot(event=None):
     if not "." in display.get():
         displayEntry.insert('end', ".")
 
@@ -239,5 +238,25 @@ sign_button.place(x=95, y=120, width=75, height=50)
 square_button = tk.Button(window, text="x²", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=square)
 square_button.place(x=180, y=120, width=75, height=50)
 
+#---Détection des touches---
+window.bind("1", insert1)
+window.bind("2", insert2)
+window.bind("3", insert3)
+window.bind("4", insert4)
+window.bind("5", insert5)
+window.bind("6", insert6)
+window.bind("7", insert7)
+window.bind("8", insert8)
+window.bind("9", insert9)
+window.bind("0", insert0)
+
+window.bind("+", add)
+window.bind("-", subtract)
+window.bind("*", multiply)
+window.bind("/", divide)
+window.bind("<Return>", equal)
+window.bind("=", equal)
+window.bind("<BackSpace>", C)
+window.bind(".", dot)
 #Display of the window.
 window.mainloop()
