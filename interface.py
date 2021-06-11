@@ -1,4 +1,9 @@
 import tkinter as tk
+from script import *
+
+history_count = 1
+old_value = 0
+operation = "None"
 
 #---Function---
 def center_window(width, height):
@@ -12,73 +17,144 @@ def center_window(width, height):
     window.geometry('%dx%d+%d+%d' % (width, height, x, y))
 
 def insert1():
-    if int(display.get()) == 0:
+    if float(display.get()) == 0 and not "." in display.get():
         print("test")
         displayEntry.delete(0, 'end')
         displayEntry.insert(0, "1")
     else :
         displayEntry.insert('end', "1")
 def insert2():
-    if int(display.get()) == 0:
+    if float(display.get()) == 0 and not "." in display.get():
         displayEntry.delete(0, 'end')
         displayEntry.insert(0, "2")
     else :
         displayEntry.insert('end', "2")
 def insert3():
-    if int(display.get()) == 0:
+    if float(display.get()) == 0 and not "." in display.get():
         displayEntry.delete(0, 'end')
         displayEntry.insert(0, "3")
     else :
         displayEntry.insert('end', "3")
 def insert4():
-    if int(display.get()) == 0:
+    if float(display.get()) == 0 and not "." in display.get():
         displayEntry.delete(0, 'end')
         displayEntry.insert(0, "4")
     else :
         displayEntry.insert('end', "4")
 def insert5():
-    if int(display.get()) == 0:
+    if float(display.get()) == 0 and not "." in display.get():
         displayEntry.delete(0, 'end')
         displayEntry.insert(0, "5")
     else :
         displayEntry.insert('end', "5")
 def insert6():
-    if int(display.get()) == 0:
+    if float(display.get()) == 0 and not "." in display.get():
         displayEntry.delete(0, 'end')
         displayEntry.insert(0, "6")
     else :
         displayEntry.insert('end', "6")
 def insert7():
-    if int(display.get()) == 0:
+    if float(display.get()) == 0 and not "." in display.get():
         displayEntry.delete(0, 'end')
         displayEntry.insert(0, "7")
     else :
         displayEntry.insert('end', "7")
 def insert8():
-    if int(display.get()) == 0:
+    if float(display.get()) == 0 and not "." in display.get():
         displayEntry.delete(0, 'end')
         displayEntry.insert(0, "8")
     else :
         displayEntry.insert('end', "8")
 def insert9():
-    if int(display.get()) == 0:
+    if float(display.get()) == 0 and not "." in display.get():
         displayEntry.delete(0, 'end')
         displayEntry.insert(0, "9")
     else :
         displayEntry.insert('end', "9")
 def insert0():
-    if display != 0:
+    if float(display.get()) != 0:
         displayEntry.insert('end', "0")
 
 def C():
+    global operation, old_value, history_count
+    displayEntry.delete(0, 'end')
+    displayEntry.insert(0, "0")
+    history_count = 1
+    old_value = 0
+    operation = "None"
+
+def set_0():
     displayEntry.delete(0, 'end')
     displayEntry.insert(0, "0")
 
 def sign_change():
-    if int(display.get()) > 0:
+    if float(display.get()) > 0:
         displayEntry.insert(0, "-")
-    elif int(display.get()) < 0:
+    elif float(display.get()) < 0:
         displayEntry.delete(0, 1)
+
+def add():
+    global operation, old_value, history_count
+    history_count += 1
+    operation = "+"
+    old_value = float(display.get())
+    set_0()
+
+def subtract():
+    global operation, old_value, history_count
+    history_count += 1
+    operation = "-"
+    old_value = float(display.get())
+    set_0()
+
+def multiply():
+    global operation, old_value, history_count
+    history_count += 1
+    operation = "*"
+    old_value = float(display.get())
+    set_0()
+
+def divide():
+    global operation, old_value, history_count
+    history_count += 1
+    operation = "/"
+    old_value = float(display.get())
+    set_0()
+
+def square():
+    global operation, old_value
+    operation = "^"
+    old_value = float(display.get())
+    equal()
+
+def equal():
+    if history_count == 1 : return
+    if display.get() == "NULL : divided by zero" : C()
+    elif operation == "+":
+        val_string = (str(addition(old_value, float(display.get()))))
+        displayEntry.delete(0, 'end')
+        displayEntry.insert(0, val_string)
+    elif operation == "-":
+        val_string = (str(soustraction(old_value, float(display.get()))))
+        displayEntry.delete(0, 'end')
+        displayEntry.insert(0, val_string)
+    elif operation == "*":
+        val_string = (str(multiplication(old_value, float(display.get()))))
+        displayEntry.delete(0, 'end')
+        displayEntry.insert(0, val_string)
+    elif operation == "/":
+        val_string = (str(division(old_value, float(display.get()))))
+        displayEntry.delete(0, 'end')
+        displayEntry.insert(0, val_string)
+    elif operation == "^":
+        val_string = (str(carre(float(display.get()))))
+        displayEntry.delete(0, 'end')
+        displayEntry.insert(0, val_string)
+    else : C()
+
+def dot():
+    if not "." in display.get():
+        displayEntry.insert('end', ".")
 
 def rien():
     pass
@@ -135,23 +211,23 @@ nine_button = tk.Button(window, text="9", font=('Bahnschrift SemiBold', 25), bg=
 nine_button.place(x=180, y=180, width=75, height=50)
 
 #Operation button
-divide_button = tk.Button(window, text="÷", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=rien)
+divide_button = tk.Button(window, text="÷", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=divide)
 divide_button.place(x=265, y=120, width=75, height=50)
 
-multiply_button = tk.Button(window, text="×", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=rien)
+multiply_button = tk.Button(window, text="×", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=multiply)
 multiply_button.place(x=265, y=180, width=75, height=50)
 
-subtract_button = tk.Button(window, text="-", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=rien)
+subtract_button = tk.Button(window, text="-", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=subtract)
 subtract_button.place(x=265, y=240, width=75, height=50)
 
-add_button = tk.Button(window, text="+", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=rien)
+add_button = tk.Button(window, text="+", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=add)
 add_button.place(x=265, y=300, width=75, height=50)
 
-equal_button = tk.Button(window, text="=", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=rien)
+equal_button = tk.Button(window, text="=", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=equal)
 equal_button.place(x=265, y=360, width=75, height=50)
 
 #Other button
-dot_button = tk.Button(window, text=".", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=rien)
+dot_button = tk.Button(window, text=".", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=dot)
 dot_button.place(x=180, y=360, width=75, height=50)
 
 C_button = tk.Button(window, text="C", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=C)
@@ -160,7 +236,7 @@ C_button.place(x=10, y=120, width=75, height=50)
 sign_button = tk.Button(window, text="+/-", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=sign_change)
 sign_button.place(x=95, y=120, width=75, height=50)
 
-square_button = tk.Button(window, text="x²", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=rien)
+square_button = tk.Button(window, text="x²", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=square)
 square_button.place(x=180, y=120, width=75, height=50)
 
 #Display of the window.
