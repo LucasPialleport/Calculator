@@ -30,7 +30,8 @@ window.configure(bg=ColorBackground)
 
 #display bar
 display = tk.StringVar(window)
-displayEntry = tk.Entry(window, textvariable=display, bg="#232F4E", fg=ColorFont, bd=0, font=('Bahnschrift SemiBold', 20))
+cmd = window.register(lambda s: not s or s.isdigit()) #permet de limiter les entrée de DisplayEntry à des chiffre
+displayEntry = tk.Entry(window, textvariable=display, bg=ColorButton, fg=ColorFont, bd=0, font=('Bahnschrift SemiBold', 20), validate="key", vcmd=(cmd, "%P"))
 displayEntry.place(x=10, y=10, width=330, height=100)
 
 #Numbers button
@@ -79,6 +80,7 @@ add_button.place(x=265, y=300, width=75, height=50)
 
 equal_button = tk.Button(window, text="=", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=rien)
 equal_button.place(x=265, y=360, width=75, height=50)
+
 #Other button
 dot_button = tk.Button(window, text=".", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=rien)
 dot_button.place(x=180, y=360, width=75, height=50)
@@ -91,5 +93,6 @@ sign_button.place(x=95, y=120, width=75, height=50)
 
 square_button = tk.Button(window, text="x²", font=('Bahnschrift SemiBold', 25), bg=ColorButton, fg=ColorFont, bd=0,command=rien)
 square_button.place(x=180, y=120, width=75, height=50)
+
 #Display of the window.
 window.mainloop()
